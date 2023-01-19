@@ -18,8 +18,8 @@
 
 ***/
 
-#ifndef RATIONAL_H
-#define RATIONAL_H
+#ifndef LIBOLIVECORE_RATIONAL_H
+#define LIBOLIVECORE_RATIONAL_H
 
 extern "C" {
 #include <libavutil/rational.h>
@@ -144,4 +144,4 @@ private:
 
 }
 
-#endif // RATIONAL_H
+#endif // LIBOLIVECORE_RATIONAL_H

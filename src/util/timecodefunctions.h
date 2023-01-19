@@ -18,8 +18,8 @@
 
 ***/
 
-#ifndef TIMECODEFUNCTIONS_H
-#define TIMECODEFUNCTIONS_H
+#ifndef LIBOLIVECORE_TIMECODEFUNCTIONS_H
+#define LIBOLIVECORE_TIMECODEFUNCTIONS_H
 
 #include "rational.h"
 
@@ -57,6 +57,8 @@ public:
   static std::string time_to_timecode(const rational& time, const rational& timebase, const Display &display, bool show_plus_if_positive = false);
   static rational timecode_to_time(std::string timecode, const rational& timebase, const Display& display, bool *ok = nullptr);
 
+  static std::string time_to_string(int64_t ms);
+
   static rational snap_time_to_timebase(const rational& time, const rational& timebase, Rounding floor = kRound);
 
   static int64_t time_to_timestamp(const rational& time, const rational& timebase, Rounding floor = kRound);
@@ -73,4 +75,4 @@ public:
 
 }
 
-#endif // TIMECODEFUNCTIONS_H
+#endif // LIBOLIVECORE_TIMECODEFUNCTIONS_H

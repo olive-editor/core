@@ -18,8 +18,8 @@
 
 ***/
 
-#ifndef STRINGUTILS_H
-#define STRINGUTILS_H
+#ifndef LIBOLIVECORE_STRINGUTILS_H
+#define LIBOLIVECORE_STRINGUTILS_H
 
 #include <algorithm>
 #include <regex>
@@ -204,4 +204,4 @@ public:
 
 }
 
-#endif // STRINGUTILS_H
+#endif // LIBOLIVECORE_STRINGUTILS_H

@@ -18,6 +18,8 @@ cmake_minimum_required(VERSION 3.13 FATAL_ERROR)
 
 project(libolivecore VERSION 1.0.0 LANGUAGES CXX)
 
+option(OLIVECORE_BUILD_TESTS ON)
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -39,6 +41,7 @@ endif()
 find_package(OpenGL REQUIRED)
 
 add_library(olivecore
+  src/core.h
   src/util/color.cpp
   src/util/color.h
   src/util/pixelformat.h
@@ -46,11 +49,25 @@ add_library(olivecore
   src/util/rational.h
   src/util/stringutils.cpp
   src/util/stringutils.h
+  src/util/tests.cpp
+  src/util/tests.h
   src/util/timecodefunctions.cpp
   src/util/timecodefunctions.h
   src/util/timerange.cpp
   src/util/timerange.h
   src/util/value.cpp
+  src/util/value.h
+)
+
+set(INSTALL_HEADERS
+  src/core.h
+  src/util/color.h
+  src/util/pixelformat.h
+  src/util/rational.h
+  src/util/stringutils.h
+  src/util/tests.h
+  src/util/timecodefunctions.h
+  src/util/timerange.h
   src/util/value.h
 )
 
@@ -64,3 +81,31 @@ target_link_libraries(olivecore PRIVATE
   Imath::Imath
   FFMPEG::avutil
 )
+
+set_target_properties(olivecore PROPERTIES PUBLIC_HEADER
+  "${INSTALL_HEADERS}"
+)
+
+install(TARGETS olivecore
+  PUBLIC_HEADER DESTINATION "${CMAKE_INSTALL_PREFIX}/include/olive/core"
+)
+
+if (OLIVECORE_BUILD_TESTS)
+  enable_testing()
+
+  function(make_test name)
+    add_executable(${name}
+      tests/${name}.cpp
+    )
+    target_link_libraries(${name} PRIVATE olivecore)
+    target_include_directories(${name} PRIVATE
+      "${CMAKE_SOURCE_DIR}/src"
+    )
+    add_test(${name} ${name})
+  endfunction()
+
+  make_test(rational-test)
+  make_test(stringutils-test)
+  make_test(timecode-test)
+  make_test(timerange-test)
+endif()

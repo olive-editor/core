@@ -18,8 +18,8 @@
 
 ***/
 
-#ifndef VALUE_H
-#define VALUE_H
+#ifndef LIBOLIVECORE_VALUE_H
+#define LIBOLIVECORE_VALUE_H
 
 #include <map>
 #include <stdint.h>
@@ -93,4 +93,4 @@ using ValueMap = std::map<std::string, Value>;
 
 }
 
-#endif // VALUE_H
+#endif // LIBOLIVECORE_VALUE_H

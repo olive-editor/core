@@ -30,7 +30,7 @@ namespace olive::core {
 
 std::string Timecode::time_to_timecode(const rational &time, const rational &timebase, const Timecode::Display &display, bool show_plus_if_positive)
 {
-  if (timebase.isNull()) {
+  if (timebase.isNull() || timebase.flipped().toDouble() < 1) {
     return "INVALID TIMEBASE";
   }
 
@@ -66,7 +66,7 @@ std::string Timecode::time_to_timecode(const rational &time, const rational &tim
                                                   StringUtils::to_string_leftpad(fraction, 3).c_str());
     } else {
       // Determine what symbol to separate frames (";" is used for drop frame, ":" is non-drop frame)
-      const char *frame_token = "";
+      const char *frame_token;
       double frame_rate = timebase.flipped().toDouble();
       int rounded_frame_rate = std::llround(frame_rate);
       int64_t frames, secs, mins, hours;
@@ -269,6 +269,19 @@ rational Timecode::timecode_to_time(std::string timecode, const rational &timeba
 err_fatal:
   if (ok) *ok = false;
   return 0;
+}
+
+std::string Timecode::time_to_string(int64_t ms)
+{
+  int64_t total_seconds = ms / 1000;
+  int64_t ss = total_seconds % 60;
+  int64_t mm = (total_seconds / 60) % 60;
+  int64_t hh = total_seconds / 3600;
+
+  return StringUtils::format("%s:%s:%s",
+                             StringUtils::to_string_leftpad(hh, 2).c_str(),
+                             StringUtils::to_string_leftpad(mm, 2).c_str(),
+                             StringUtils::to_string_leftpad(ss, 2).c_str());
 }
 
 rational Timecode::snap_time_to_timebase(const rational &time, const rational &timebase, Rounding floor)

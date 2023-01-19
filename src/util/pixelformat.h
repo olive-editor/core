@@ -1,5 +1,5 @@
-#ifndef PIXELFORMAT_H
-#define PIXELFORMAT_H
+#ifndef LIBOLIVECORE_PIXELFORMAT_H
+#define LIBOLIVECORE_PIXELFORMAT_H
 
 namespace olive::core {
 
@@ -42,7 +42,7 @@ public:
     return byte_count(f_);
   }
 
-  bool is_float(Format f)
+  static bool is_float(Format f)
   {
     switch (f) {
     case INVALID:
@@ -58,6 +58,11 @@ public:
     return false;
   }
 
+  bool is_float() const
+  {
+    return is_float(f_);
+  }
+
 private:
   Format f_;
 
@@ -65,4 +70,4 @@ private:
 
 }
 
-#endif // PIXELFORMAT_H
+#endif // LIBOLIVECORE_PIXELFORMAT_H

@@ -18,8 +18,8 @@
 
 ***/
 
-#ifndef TIMERANGE_H
-#define TIMERANGE_H
+#ifndef LIBOLIVECORE_TIMERANGE_H
+#define LIBOLIVECORE_TIMERANGE_H
 
 #include <list>
 #include <vector>
@@ -32,6 +32,16 @@ class TimeRange {
 public:
   TimeRange() = default;
   TimeRange(const rational& in, const rational& out);
+  TimeRange(const TimeRange& r) :
+    TimeRange(r.in(), r.out())
+  {
+  }
+
+  TimeRange &operator=(const TimeRange &r)
+  {
+    set_range(r.in(), r.out());
+    return *this;
+  }
 
   const rational& in() const;
   const rational& out() const;
@@ -90,7 +100,7 @@ public:
   {
     std::vector<T> additions;
 
-    for (auto it = list->begin(); it != list->end(); it++) {
+    for (auto it = list->begin(); it != list->end(); ) {
       T& compare = *it;
 
       if (remove.Contains(compare)) {
@@ -104,7 +114,6 @@ public:
           compare.set_out(remove.in());
 
           additions.push_back(new_range);
-          list->push_back(new_range);
           break;
         } else {
           if (compare.in() < remove.in() && compare.out() > remove.in()) {
@@ -119,6 +128,8 @@ public:
         }
       }
     }
+
+    list->insert(list->end(), additions.begin(), additions.end());
   }
 
   bool contains(const TimeRange& range, bool in_inclusive = true, bool out_inclusive = true) const;
@@ -296,4 +307,4 @@ private:
 
 }
 
-#endif // TIMERANGE_H
+#endif // LIBOLIVECORE_TIMERANGE_H

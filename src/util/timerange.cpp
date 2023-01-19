@@ -198,7 +198,7 @@ void TimeRangeList::insert(TimeRange range_to_add)
   }
 
   // Does not contain range, so we'll almost certainly be adding it in some way
-  for (auto it = array_.begin(); it != array_.end(); it++) {
+  for (auto it = array_.begin(); it != array_.end(); ) {
     const TimeRange& compare = *it;
 
     if (compare.OverlapsWith(range_to_add)) {

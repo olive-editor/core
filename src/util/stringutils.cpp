@@ -20,6 +20,7 @@
 
 #include "stringutils.h"
 
+#include <cstring>
 #include <stdarg.h>
 #include <stdexcept>
 
@@ -71,15 +72,27 @@ int StringUtils::to_int(const std::string &s, int base, bool *ok)
 
 std::string StringUtils::format(const char *fmt, ...)
 {
-  va_list ap;
-  va_start(ap, fmt);
+  va_list ap1, ap2;
+  va_start(ap1, fmt);
 
-  int sz = std::vsnprintf(nullptr, 0, fmt, ap);
+  // Need to duplicate because we call vsnprintf twice and it consumes the va_list each time
+  va_copy(ap2, ap1);
+
+  int s = std::vsnprintf(nullptr, 0, fmt, ap1);
+
+  // Create string with size, adding 1 because vsnprintf will want to write a null terminator
   std::string r;
-  r.resize(sz);
-  std::vsnprintf(&r[0], sz, fmt, ap);
+  s++;
+  r.resize(s);
 
-  va_end(ap);
+  // Write into string
+  std::vsnprintf(r.data(), s, fmt, ap2);
+
+  // Pop null terminator
+  r.pop_back();
+
+  va_end(ap2);
+  va_end(ap1);
 
   return r;
 }
