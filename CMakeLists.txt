@@ -74,6 +74,7 @@ else()
   message("   OpenTimelineIO interchange will be disabled.")
 endif()
 
+install(TARGETS olivecore)
 install(DIRECTORY "${CMAKE_SOURCE_DIR}/include/olive" DESTINATION "${CMAKE_INSTALL_PREFIX}/include")
 
 if (OLIVECORE_BUILD_TESTS)
