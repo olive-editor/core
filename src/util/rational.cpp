@@ -18,11 +18,11 @@
 
 ***/
 
-#include "rational.h"
+#include "util/rational.h"
 
 #include <math.h>
 
-#include "stringutils.h"
+#include "util/stringutils.h"
 
 namespace olive::core {
 

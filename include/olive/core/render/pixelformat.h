@@ -1,3 +1,23 @@
+/***
+
+  Olive - Non-Linear Video Editor
+  Copyright (C) 2023 Olive Studios LLC
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+***/
+
 #ifndef LIBOLIVECORE_PIXELFORMAT_H
 #define LIBOLIVECORE_PIXELFORMAT_H
 
@@ -12,7 +32,7 @@ public:
     U16,
     F16,
     F32,
-    FORMAT_COUNT
+    COUNT
   };
 
   PixelFormat(Format f = INVALID) { f_ = f; }
@@ -23,7 +43,7 @@ public:
   {
     switch (f) {
     case INVALID:
-    case FORMAT_COUNT:
+    case COUNT:
       break;
     case U8:
       return 1;
@@ -46,7 +66,7 @@ public:
   {
     switch (f) {
     case INVALID:
-    case FORMAT_COUNT:
+    case COUNT:
     case U8:
     case U16:
       break;

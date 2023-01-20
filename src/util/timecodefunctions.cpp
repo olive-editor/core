@@ -18,13 +18,13 @@
 
 ***/
 
-#include "timecodefunctions.h"
+#include "util/timecodefunctions.h"
 
 extern "C" {
 #include <libavutil/mathematics.h>
 }
 
-#include "stringutils.h"
+#include "util/stringutils.h"
 
 namespace olive::core {
 

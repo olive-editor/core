@@ -41,39 +41,21 @@ endif()
 find_package(OpenGL REQUIRED)
 
 add_library(olivecore
-  src/core.h
+  src/render/audioparams.cpp
+  src/render/samplebuffer.cpp
+  src/util/bezier.cpp
   src/util/color.cpp
-  src/util/color.h
-  src/util/pixelformat.h
   src/util/rational.cpp
-  src/util/rational.h
   src/util/stringutils.cpp
-  src/util/stringutils.h
   src/util/tests.cpp
-  src/util/tests.h
   src/util/timecodefunctions.cpp
-  src/util/timecodefunctions.h
   src/util/timerange.cpp
-  src/util/timerange.h
   src/util/value.cpp
-  src/util/value.h
-)
-
-set(INSTALL_HEADERS
-  src/core.h
-  src/util/color.h
-  src/util/pixelformat.h
-  src/util/rational.h
-  src/util/stringutils.h
-  src/util/tests.h
-  src/util/timecodefunctions.h
-  src/util/timerange.h
-  src/util/value.h
 )
 
 target_include_directories(olivecore PRIVATE
   ${FFMPEG_INCLUDE_DIRS}
-  "${CMAKE_SOURCE_DIR}/src"
+  "${CMAKE_SOURCE_DIR}/include/olive/core"
 )
 
 target_link_libraries(olivecore PRIVATE
@@ -82,13 +64,17 @@ target_link_libraries(olivecore PRIVATE
   FFMPEG::avutil
 )
 
-set_target_properties(olivecore PROPERTIES PUBLIC_HEADER
-  "${INSTALL_HEADERS}"
-)
+# Link OpenTimelineIO (optional)
+find_package(OpenTimelineIO)
+if (OpenTimelineIO_FOUND)
+  target_compile_definitions(olivecore PRIVATE USE_OTIO)
+  target_include_directories(olivecore PRIVATE ${OTIO_INCLUDE_DIRS})
+  target_link_libraries(olivecore PRIVATE ${OTIO_LIBRARIES})
+else()
+  message("   OpenTimelineIO interchange will be disabled.")
+endif()
 
-install(TARGETS olivecore
-  PUBLIC_HEADER DESTINATION "${CMAKE_INSTALL_PREFIX}/include/olive/core"
-)
+install(DIRECTORY "${CMAKE_SOURCE_DIR}/include/olive" DESTINATION "${CMAKE_INSTALL_PREFIX}/include")
 
 if (OLIVECORE_BUILD_TESTS)
   enable_testing()
@@ -99,7 +85,7 @@ if (OLIVECORE_BUILD_TESTS)
     )
     target_link_libraries(${name} PRIVATE olivecore)
     target_include_directories(${name} PRIVATE
-      "${CMAKE_SOURCE_DIR}/src"
+      "${CMAKE_SOURCE_DIR}/include/olive/core"
     )
     add_test(${name} ${name})
   endfunction()

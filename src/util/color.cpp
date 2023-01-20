@@ -18,7 +18,7 @@
 
 ***/
 
-#include "color.h"
+#include "util/color.h"
 
 #include <Imath/half.h>
 #include <math.h>
@@ -197,7 +197,7 @@ void Color::toData(char *out, const PixelFormat &format, unsigned int nb_channel
 
     switch (format) {
     case PixelFormat::INVALID:
-    case PixelFormat::FORMAT_COUNT:
+    case PixelFormat::COUNT:
       break;
     case PixelFormat::U8:
       reinterpret_cast<uint8_t*>(out)[i] = f * 255.0;
@@ -226,7 +226,7 @@ Color Color::fromData(const char *in, const PixelFormat &format, unsigned int nb
 
     switch (format) {
     case PixelFormat::INVALID:
-    case PixelFormat::FORMAT_COUNT:
+    case PixelFormat::COUNT:
       break;
     case PixelFormat::U8:
       f = DataType(reinterpret_cast<const uint8_t*>(in)[i]) / 255.0;

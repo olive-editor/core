@@ -21,11 +21,9 @@
 #ifndef LIBOLIVECORE_COLOR_H
 #define LIBOLIVECORE_COLOR_H
 
-#include "pixelformat.h"
+#include "../render/pixelformat.h"
 
 namespace olive::core {
-
-static const unsigned int RGBA = 4;
 
 /**
  * @brief High precision 32-bit DataType based RGBA color value
@@ -34,6 +32,7 @@ class Color
 {
 public:
   using DataType = float;
+  static constexpr unsigned int RGBA = 4;
 
   Color()
   {

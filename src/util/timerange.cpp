@@ -18,13 +18,13 @@
 
 ***/
 
-#include "timerange.h"
+#include "util/timerange.h"
 
 #include <algorithm>
 #include <cmath>
 #include <utility>
 
-#include "timecodefunctions.h"
+#include "util/timecodefunctions.h"
 
 namespace olive::core {
 

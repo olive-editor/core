@@ -18,7 +18,7 @@
 
 ***/
 
-#include "stringutils.h"
+#include "util/stringutils.h"
 
 #include <cstring>
 #include <stdarg.h>
