@@ -131,7 +131,7 @@ public:
    * The padded string.
    */
   template <typename T>
-  static std::string to_string_leftpad(T val, int padding, char c = '0')
+  static std::string to_string_leftpad(T val, size_t padding, char c = '0')
   {
     std::string s = std::to_string(val);
 
