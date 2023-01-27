@@ -20,6 +20,7 @@
 
 #include "util/color.h"
 
+#include <cmath.h>
 #include <Imath/half.h>
 #include <math.h>
 #include <stdint.h>
