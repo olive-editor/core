@@ -56,9 +56,5 @@ int main()
   t.add("Timecode::time_to_timecode", timecodefunctions_time_to_timecode_test);
   t.add("Timecode::time_to_timecode2", timecodefunctions_time_to_timecode_test2);
 
-  if (t.run()) {
-    return 0;
-  } else {
-    return 1;
-  }
+  return t.exec();
 }

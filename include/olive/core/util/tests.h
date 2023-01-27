@@ -40,6 +40,15 @@ public:
 
   bool run();
 
+  int exec()
+  {
+    if (run()) {
+      return 0;
+    } else {
+      return 1;
+    }
+  }
+
   static void echo(const char *fmt, ...);
 
 private:

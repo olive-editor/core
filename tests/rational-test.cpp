@@ -98,9 +98,5 @@ int main()
   t.add("rational::toString/fromString", rational_to_from_string_test);
   t.add("rational::toString/fromString2", rational_to_from_string_test2);
 
-  if (t.run()) {
-    return 0;
-  } else {
-    return 1;
-  }
+  return t.exec();
 }

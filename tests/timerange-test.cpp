@@ -89,11 +89,7 @@ int main()
   Tester t;
 
   t.add("TimeRangeList::remove", timerangelist_remove_test);
-  t.add("TimeRangeList::merge_adjacent", timerangelist_remove_test);
+  t.add("TimeRangeList::merge_adjacent", timerangelist_mergeadjacent_test);
 
-  if (t.run()) {
-    return 0;
-  } else {
-    return 1;
-  }
+  return t.exec();
 }

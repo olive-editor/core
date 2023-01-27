@@ -42,9 +42,5 @@ int main()
 
   t.add("StringUtils::format", stringutils_format_test);
 
-  if (t.run()) {
-    return 0;
-  } else {
-    return 1;
-  }
+  return t.exec();
 }
