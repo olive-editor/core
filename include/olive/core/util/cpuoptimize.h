@@ -26,7 +26,7 @@
 #include <xmmintrin.h>
 #elif defined(__aarch64__)
 #define OLIVE_PROCESSOR_ARM
-#include <sse2neon.h>
+#include "sse2neon.h"
 #endif
 
 #endif // LIBOLIVECORE_CPUOPTIMIZE_H
