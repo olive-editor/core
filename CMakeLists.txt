@@ -24,7 +24,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 # Link avutil
 find_package(FFMPEG 3.0 REQUIRED
@@ -55,7 +55,7 @@ add_library(olivecore
 
 target_include_directories(olivecore PRIVATE
   ${FFMPEG_INCLUDE_DIRS}
-  "${CMAKE_SOURCE_DIR}/include/olive/core"
+  "${CMAKE_CURRENT_SOURCE_DIR}/include/olive/core"
 )
 
 target_link_libraries(olivecore PRIVATE
@@ -75,7 +75,7 @@ else()
 endif()
 
 install(TARGETS olivecore)
-install(DIRECTORY "${CMAKE_SOURCE_DIR}/include/olive" DESTINATION "${CMAKE_INSTALL_PREFIX}/include")
+install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include/olive" DESTINATION "${CMAKE_INSTALL_PREFIX}/include")
 
 if (OLIVECORE_BUILD_TESTS)
   enable_testing()
@@ -86,7 +86,7 @@ if (OLIVECORE_BUILD_TESTS)
     )
     target_link_libraries(${name} PRIVATE olivecore)
     target_include_directories(${name} PRIVATE
-      "${CMAKE_SOURCE_DIR}/include/olive/core"
+      "${CMAKE_CURRENT_SOURCE_DIR}/include/olive/core"
     )
     add_test(${name} ${name})
   endfunction()
