@@ -79,6 +79,7 @@ install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include/olive" DESTINATION "${CMA
 
 if (OLIVECORE_BUILD_TESTS)
   enable_testing()
+  message(STATUS "Tests will be built")
 
   function(make_test name)
     add_executable(${name}
@@ -87,6 +88,7 @@ if (OLIVECORE_BUILD_TESTS)
     target_link_libraries(${name} PRIVATE olivecore)
     target_include_directories(${name} PRIVATE
       "${CMAKE_CURRENT_SOURCE_DIR}/include/olive/core"
+      ${FFMPEG_INCLUDE_DIRS}
     )
     add_test(${name} ${name})
   endfunction()
