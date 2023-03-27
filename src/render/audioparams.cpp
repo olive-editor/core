@@ -84,9 +84,7 @@ int64_t AudioParams::time_to_samples(const double &time) const
 {
   assert(is_valid());
 
-  // NOTE: Not sure if we should round or ceil, but I've gotten better results with ceil.
-  //       Specifically, we seem to occasionally get straggler ranges that never cache with round.
-  return std::ceil(double(sample_rate()) * time);
+  return std::round(double(sample_rate()) * time);
 }
 
 int64_t AudioParams::time_to_samples(const rational &time) const
