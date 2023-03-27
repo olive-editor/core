@@ -21,6 +21,7 @@
 #include "render/samplebuffer.h"
 
 #include <algorithm>
+#include <assert.h>
 #include <cmath>
 #include <string.h>
 
@@ -148,29 +149,47 @@ void SampleBuffer::speed(double speed)
 
 void SampleBuffer::transform_volume(float f)
 {
-  for (int i=0;i<audio_params().channel_count();i++) {
-    transform_volume_for_channel(i, f);
-  }
+  transform_volume(f, this, this);
 }
 
 void SampleBuffer::transform_volume_for_channel(int channel, float volume)
 {
-  float *cdat = data_[channel].data();
+  transform_volume_for_channel(channel, volume, this, this);
+}
+
+void SampleBuffer::transform_volume(float f, const SampleBuffer *input, SampleBuffer *output)
+{
+  assert(input->channel_count() == output->channel_count());
+  assert(input->sample_count_per_channel_ == output->sample_count_per_channel_);
+
+  for (int i=0;i<input->audio_params().channel_count();i++) {
+    transform_volume_for_channel(i, f, input, output);
+  }
+}
+
+void SampleBuffer::transform_volume_for_channel(int channel, float volume, const SampleBuffer *input, SampleBuffer *output)
+{
+  const float *cdat = input->data_[channel].data();
+  float *odat = output->data_[channel].data();
   size_t unopt_start = 0;
+
+  assert(input->channel_count() == output->channel_count());
+  assert(input->sample_count_per_channel_ == output->sample_count_per_channel_);
 
 #if defined(OLIVE_PROCESSOR_X86) || defined(OLIVE_PROCESSOR_ARM)
   __m128 mult = _mm_load1_ps(&volume);
-  unopt_start = (sample_count_per_channel_ / 4) * 4;
+  unopt_start = (input->sample_count_per_channel_ / 4) * 4;
   for (size_t j=0; j<unopt_start; j+=4) {
-    float *here = cdat + j;
-    __m128 samples = _mm_loadu_ps(here);
+    const float *in_here = cdat + j;
+    float *out_here = odat + j;
+    __m128 samples = _mm_loadu_ps(in_here);
     __m128 multiplied = _mm_mul_ps(samples, mult);
-    _mm_storeu_ps(here, multiplied);
+    _mm_storeu_ps(out_here, multiplied);
   }
 #endif
 
-  for (size_t j=unopt_start; j<sample_count_per_channel_; j++) {
-    cdat[j] *= volume;
+  for (size_t j=unopt_start; j<input->sample_count_per_channel_; j++) {
+    odat[j] = cdat[j] * volume;
   }
 }
 

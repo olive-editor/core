@@ -81,8 +81,12 @@ public:
 
   void reverse();
   void speed(double speed);
+
   void transform_volume(float f);
   void transform_volume_for_channel(int channel, float volume);
+  static void transform_volume(float f, const SampleBuffer *input, SampleBuffer *output);
+  static void transform_volume_for_channel(int channel, float volume, const SampleBuffer *input, SampleBuffer *output);
+
   void transform_volume_for_sample(size_t sample_index, float volume);
   void transform_volume_for_sample_on_channel(size_t sample_index, int channel, float volume);
 
