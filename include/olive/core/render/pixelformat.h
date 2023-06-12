@@ -57,6 +57,21 @@ public:
     return 0;
   }
 
+  const char *to_string() const
+  {
+    switch (f_) {
+    case U8: return "u8";
+    case U16: return "u16";
+    case F16: return "f16";
+    case F32: return "f32";
+    case INVALID:
+    case COUNT:
+      break;
+    }
+
+    return "";
+  }
+
   int byte_count() const
   {
     return byte_count(f_);

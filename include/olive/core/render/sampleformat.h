@@ -120,7 +120,9 @@ public:
 
   static SampleFormat from_string(const std::string &s)
   {
-    if (s == "u8") {
+    if (s.empty()) {
+      return INVALID;
+    } else if (s == "u8") {
       return U8;
     } else if (s == "s16") {
       return S16;
