@@ -49,6 +49,21 @@ SampleBuffer::SampleBuffer(const AudioParams &audio_params, size_t samples_per_c
   allocate();
 }
 
+SampleBuffer SampleBuffer::rip_channel(int channel) const
+{
+  AudioParams p = this->audio_params_;
+  p.set_channel_layout(AV_CH_LAYOUT_MONO);
+
+  SampleBuffer b(p, this->sample_count_per_channel_);
+  b.fast_set(*this, 0, channel);
+  return b;
+}
+
+std::vector<float> SampleBuffer::rip_channel_vector(int channel) const
+{
+  return data_.at(channel);
+}
+
 const AudioParams &SampleBuffer::audio_params() const
 {
   return audio_params_;
@@ -242,6 +257,15 @@ void SampleBuffer::set(int channel, const float *data, size_t sample_offset, siz
   }
 
   memcpy(&data_[channel].data()[sample_offset], data, sizeof(float) * sample_length);
+}
+
+void SampleBuffer::fast_set(const SampleBuffer &other, int to, int from)
+{
+  if (from == -1) {
+    from = to;
+  }
+
+  data_[to] = other.data_[from];
 }
 
 void SampleBuffer::clamp_channel(int channel)

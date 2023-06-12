@@ -44,6 +44,9 @@ public:
   SampleBuffer(const AudioParams& audio_params, const rational& length);
   SampleBuffer(const AudioParams& audio_params, size_t samples_per_channel);
 
+  SampleBuffer rip_channel(int channel) const;
+  std::vector<float> rip_channel_vector(int channel) const;
+
   const AudioParams& audio_params() const;
   void set_audio_params(const AudioParams& params);
 
@@ -101,6 +104,8 @@ public:
   {
     set(channel, data, 0, sample_length);
   }
+
+  void fast_set(const SampleBuffer &other, int to, int from = -1);
 
 private:
   void clamp_channel(int channel);
